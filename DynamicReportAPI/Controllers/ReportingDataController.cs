@@ -23,11 +23,12 @@ namespace DynamicReportAPI.Controllers
         }
 
         [HttpGet("GetReportingData")]
-        public IActionResult GetReportingData()
+        public async Task<IActionResult> GetReportingData()
         {
-            var reportingData = _reportingDataService.GetReportingData();
+            var reportingData = await _reportingDataService.GetReportingData();
 
             return Ok(reportingData);
         }
+        
     }
 }
