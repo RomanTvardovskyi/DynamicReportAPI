@@ -3,6 +3,7 @@ using DAL;
 using DAL.Models;
 using System.Reflection;
 using BLL.Dtos;
+using Microsoft.EntityFrameworkCore;
 
 namespace BLL.Services
 {
@@ -25,9 +26,9 @@ namespace BLL.Services
             return columns;
         }
 
-        public List<ReportingDataDto> GetReportingData()
+        public async Task<IEnumerable<ReportingDataDto>> GetReportingData()
         {
-            var reportingData = (
+            var reportingData = await (
                 from r in _dynamicReportContext.ReportingData
                 join m in _dynamicReportContext.MasterInformation
                     on r.OrganizationId equals m.OrganizationId
@@ -42,7 +43,7 @@ namespace BLL.Services
                 Id = r.Id,
                 Question = r.Question,
                 Answer = r.Answer
-            }).ToList();
+            }).ToListAsync();
 
             return reportingData;
         }

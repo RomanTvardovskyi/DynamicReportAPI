@@ -6,6 +6,6 @@ namespace BLL.Services.Interfaces
     {
         IEnumerable<string> GetReportingColumns();
 
-        List<ReportingDataDto> GetReportingData();
+        Task<IEnumerable<ReportingDataDto>> GetReportingData();
     }
 }
