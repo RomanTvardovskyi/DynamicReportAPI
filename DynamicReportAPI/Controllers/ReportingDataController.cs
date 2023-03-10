@@ -1,4 +1,5 @@
-﻿using BLL.Services.Interfaces;
+﻿using System.Text;
+using BLL.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DynamicReportAPI.Controllers
@@ -24,11 +25,18 @@ namespace DynamicReportAPI.Controllers
 
         [HttpGet("GetReportingData")]
         public async Task<IActionResult> GetReportingData()
-        {
+        { 
             var reportingData = await _reportingDataService.GetReportingData();
 
             return Ok(reportingData);
         }
-        
+
+        [HttpGet("DownloadReportingData")]
+        public async Task<IActionResult> DownloadReportingData()
+        {
+            var reportingData = await _reportingDataService.GetReportingDataAsCsv();
+
+            return File(Encoding.UTF8.GetBytes(reportingData), "text/csv", "reporting-data.csv");
+        }
     }
 }

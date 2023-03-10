@@ -10,4 +10,8 @@
     <ProjectReference Include="..\DAL\DAL.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="ServiceStack.Text" Version="6.6.0" />
+  </ItemGroup>
+
 </Project>

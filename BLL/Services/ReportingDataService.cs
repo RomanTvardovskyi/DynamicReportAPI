@@ -4,6 +4,7 @@ using DAL.Models;
 using System.Reflection;
 using BLL.Dtos;
 using Microsoft.EntityFrameworkCore;
+using ServiceStack.Text;
 
 namespace BLL.Services
 {
@@ -26,7 +27,7 @@ namespace BLL.Services
             return columns;
         }
 
-        public async Task<IEnumerable<ReportingDataDto>> GetReportingData()
+        public async Task<IList<ReportingDataDto>> GetReportingData()
         {
             var reportingData = await (
                 from r in _dynamicReportContext.ReportingData
@@ -46,6 +47,15 @@ namespace BLL.Services
             }).ToListAsync();
 
             return reportingData;
+        }
+
+        public async Task<string> GetReportingDataAsCsv()
+        {
+            var reportingData = await GetReportingData();
+
+            var result = CsvSerializer.SerializeToCsv(reportingData);
+
+            return result;
         }
     }
 }
