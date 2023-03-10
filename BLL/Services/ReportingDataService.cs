@@ -2,6 +2,7 @@
 using DAL;
 using DAL.Models;
 using System.Reflection;
+using BLL.Dtos;
 
 namespace BLL.Services
 {
@@ -22,6 +23,28 @@ namespace BLL.Services
                 .Select(p => p.Name);
 
             return columns;
+        }
+
+        public List<ReportingDataDto> GetReportingData()
+        {
+            var reportingData = (
+                from r in _dynamicReportContext.ReportingData
+                join m in _dynamicReportContext.MasterInformation
+                    on r.OrganizationId equals m.OrganizationId
+            select new ReportingDataDto
+            {
+                OrganizationId = m.OrganizationId,
+                OrganizationName = m.OrganizationName,
+                TaxId = m.TaxId,
+                PrimaryContact = m.PrimaryContact,
+                CreatedOn = m.CreatedOn,
+                CreatedBy = m.CreatedBy,
+                Id = r.Id,
+                Question = r.Question,
+                Answer = r.Answer
+            }).ToList();
+
+            return reportingData;
         }
     }
 }

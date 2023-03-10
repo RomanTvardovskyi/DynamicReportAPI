@@ -21,5 +21,13 @@ namespace DynamicReportAPI.Controllers
 
             return Ok(columns);
         }
+
+        [HttpGet("GetReportingData")]
+        public IActionResult GetReportingData()
+        {
+            var reportingData = _reportingDataService.GetReportingData();
+
+            return Ok(reportingData);
+        }
     }
 }
